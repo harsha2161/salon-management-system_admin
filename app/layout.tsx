@@ -4,6 +4,8 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { cn } from "@/lib/utils";
 
+import { ThemeProvider } from "@/components/theme-provider"
+
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 const geistSans = Geist({
@@ -24,6 +26,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
+      suppressHydrationWarning
       lang="en"
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
     >
@@ -31,7 +34,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <Toaster position="top-right" />
        
       <div>
-        {children}
+
+    <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+        {children}    
+    </ThemeProvider>        
+
+        
       </div>
       
         </body>
