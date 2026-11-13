@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { cn } from "@/lib/utils";
 
 import { ThemeProvider } from "@/components/theme-provider"
+import { ModeToggle } from "@/components/ui/theme-switch";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             enableSystem
             disableTransitionOnChange
           >
+            <ModeToggle/>
         {children}    
     </ThemeProvider>        
 
