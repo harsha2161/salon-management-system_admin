@@ -11,9 +11,10 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import axios from "axios"
+import api from "@/lib/api"
 import { useState } from "react"
 import toast from "react-hot-toast"
+
 
 export default function LoginPage() {
 
@@ -22,26 +23,25 @@ export default function LoginPage() {
 
    async function loginHendler() {
 
-    try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,
+    try{
+        const response = await api.post("/api/auth/login",
                 {
                     email : email,
                     password :password,
                 }
         )
 
-        toast.success(response.data.message)
+        if(response.data.role == "ADMIN"){
+          window.location.href = "/dashbourd"
+        } else {
+          toast.error("you not authorize to access this page")
+        }
+      
+      }catch (error) {
+        console.log(error)
 
-    } catch (error) {
-            const message = axios.isAxiosError<{ message?: string }>(error)
-            ? error.response?.data?.message ?? "Unable to log in. Please check your connection and try again."
-            : "An unexpected error occurred. Please try again."
-
-        toast.error(message)
-
-    }
-
-}
+      }
+  }
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-4 py-8">
         
